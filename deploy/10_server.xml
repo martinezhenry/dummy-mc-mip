@@ -1,0 +1,20 @@
+<server class="org.jpos.q2.iso.QServer" logger="Q2"
+        name="mip-server" realm="mip-server">
+    <attr name="port" type="java.lang.Integer">8090</attr>
+    <property name="debug" value="true"/>
+    <channel class="org.jpos.iso.channel.PostChannel"
+             packager="com.hvs.dummy.mip.MIPPackager"
+             type="server"
+             logger="Q2"
+             realm="mip-server">
+        <property name="timeout" value="180000"/>
+        <property name="packager-config" value="./packager/iso87Mastercard.xml" />
+        <property name="debug" value="true"/>
+    </channel>
+    <request-listener class="com.hvs.dummy.mip.services.implementations.IncomingListener" logger="Q2"
+                      realm="incoming-request-listener">
+        <property name="queue" value="TXNMGR"/>
+        <property name="ctx.DESTINATION" value="jPOS-AUTORESPONDER"/>
+        <property name="debug" value="true"/>
+    </request-listener>
+</server>
