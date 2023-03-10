@@ -480,7 +480,7 @@
             id="94"
             length="7"
             name="SERVICE INDICATOR"
-            class="org.jpos.iso.IF_CHAR"/>
+            class="org.jpos.iso.IFE_CHAR"/>
     <isofield
             id="95"
             length="42"
@@ -488,9 +488,9 @@
             class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="96"
-            length="16"
+            length="8"
             name="MESSAGE SECURITY CODE"
-            class="org.jpos.iso.IFE_BINARY"/>
+            class="org.jpos.iso.IFE_CHAR"/>
     <isofield
             id="97"
             length="17"

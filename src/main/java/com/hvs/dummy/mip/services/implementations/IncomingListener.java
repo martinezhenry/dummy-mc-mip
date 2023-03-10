@@ -8,20 +8,21 @@ import org.jpos.core.ConfigurationException;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.jpos.space.Space;
+import org.jpos.space.SpaceFactory;
+import org.jpos.transaction.Context;
 
 import java.io.IOException;
 
 @Slf4j
 public class IncomingListener implements IIncomingListener {
     private Configuration conf;
-    private ITransactionalService transactionalService;
+    private final ITransactionalService transactionalService;
+    private final Space<String, Context> space;
 
     public IncomingListener() {
         this.transactionalService = new TransactionalService();
+        this.space = SpaceFactory.getSpace();
     }
 
     @Override
@@ -34,23 +35,17 @@ public class IncomingListener implements IIncomingListener {
     public boolean process(ISOSource isoSource, ISOMsg isoMsg) {
         log.info("incoming msg");
         try {
-            if (transactionalService.isSignOn(isoMsg)) {
+            if (isoMsg.isRequest()) {
                 transactionalService.makeResponse(isoMsg, "00");
                 isoSource.send(isoMsg);
                 return false;
+
             }
 
-            if (transactionalService.isSignOff(isoMsg)) {
-                transactionalService.makeResponse(isoMsg, "00");
-                isoSource.send(isoMsg);
-                return false;
-            }
-
-            if (transactionalService.isEchoMessage(isoMsg)) {
-                transactionalService.makeResponse(isoMsg, "00");
-                isoSource.send(isoMsg);
-                return false;
-            }
+            String key = isoMsg.getString("7").concat(isoMsg.getString("11"));
+            Context cxt = new Context();
+            cxt.put("msg", isoMsg);
+            this.space.out(key, cxt, 5000L);
 
 
         } catch (ISOException | IOException e) {
