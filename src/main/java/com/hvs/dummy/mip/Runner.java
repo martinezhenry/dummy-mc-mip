@@ -15,7 +15,10 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("running dummy mip");
-        server = new Q2("deploy");
+        /*String deployPath = Objects.requireNonNull(
+                this.getClass().getClassLoader().getResource("deploy")
+        ).getPath();*/
+        server = new Q2("./deploy");
         server.start();
     }
 }

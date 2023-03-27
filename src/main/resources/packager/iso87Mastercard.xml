@@ -195,7 +195,7 @@
             id="37"
             length="12"
             name="RETRIEVAL REFERENCE NUMBER"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="38"
             length="6"
@@ -215,17 +215,17 @@
             id="41"
             length="8"
             name="CARD ACCEPTOR TERMINAL IDENTIFICACION"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="42"
             length="15"
             name="CARD ACCEPTOR IDENTIFICATION CODE"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="43"
             length="40"
             name="CARD ACCEPTOR NAME/LOCATION"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="44"
             length="25"
@@ -255,22 +255,22 @@
             id="49"
             length="3"
             name="CURRENCY CODE, TRANSACTION"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="50"
             length="3"
             name="CURRENCY CODE, SETTLEMENT"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="51"
             length="3"
             name="CURRENCY CODE, CARDHOLDER BILLING"
-            class="org.jpos.iso.IFE_CHAR"/>
+            class="org.jpos.iso.IF_CHAR"/>
     <isofield
             id="52"
             length="8"
             name="PIN DATA"
-            class="org.jpos.iso.IFB_BINARY"/>
+            class="org.jpos.iso.IFE_BINARY"/>
     <isofield
             id="53"
             length="16"

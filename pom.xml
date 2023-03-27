@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.hvs.dummy</groupId>
     <artifactId>mip</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
 
     <properties>

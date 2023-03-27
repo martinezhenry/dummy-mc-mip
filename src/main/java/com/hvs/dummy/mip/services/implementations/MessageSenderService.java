@@ -1,6 +1,7 @@
 package com.hvs.dummy.mip.services.implementations;
 
 import com.hvs.dummy.mip.MIPPackager;
+import com.hvs.dummy.mip.exceptions.DataEmptyException;
 import com.hvs.dummy.mip.exceptions.NotFoundConnectionsException;
 import com.hvs.dummy.mip.services.contracts.IMessageSenderService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,22 +23,38 @@ public class MessageSenderService implements IMessageSenderService {
     private ISOMsg isoMsg;
     private ISOPackager packager;
     private ISOServer isoServer;
-    private Space space;
+    private final Space space;
+    private final String pathSpec;
 
     public MessageSenderService() throws ISOException {
-        this.packager = new MIPPackager("packager/iso87Mastercard.xml");
+        this.pathSpec = "packager/iso87Mastercard.xml";
+        this.packager = new MIPPackager(this.pathSpec);
         this.isoMsg = new ISOMsg();
         this.isoMsg.setPackager(packager);
         this.space = SpaceFactory.getSpace();
     }
 
     @Override
-    public Map<Integer, String> request(Map<String, String> messageData) throws ISOException, IOException, NameRegistrar.NotFoundException, NotFoundConnectionsException {
+    public Map<Integer, String> request(String type, Map<String, String> messageData)
+            throws ISOException,
+            IOException,
+            NameRegistrar.NotFoundException,
+            NotFoundConnectionsException,
+            DataEmptyException {
 
         if (this.isoServer == null) {
             isoServerInstance();
         }
-        messageData.forEach((key, value) -> isoMsg.set(key, value));
+        if ("json".equals(type)) {
+            messageData.forEach((key, value) -> isoMsg.set(key, value));
+        } else {
+            String data = messageData.get("raw");
+            if (!data.isEmpty()) {
+                isoMsg.unpack(ISOUtil.hex2byte(data));
+            } else {
+                throw new DataEmptyException();
+            }
+        }
 
         ISOChannel channel = isoServer.getLastConnectedISOChannel();
         if (isoServer.getActiveConnections() > 0 && channel != null) {
