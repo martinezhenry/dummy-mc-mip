@@ -27,7 +27,7 @@ public class MessageSenderService implements IMessageSenderService {
     private final String pathSpec;
 
     public MessageSenderService() throws ISOException {
-        this.pathSpec = "packager/iso87Mastercard.xml";
+        this.pathSpec = "jar:packager/iso87Mastercard.xml";
         this.packager = new MIPPackager(this.pathSpec);
         this.isoMsg = new ISOMsg();
         this.isoMsg.setPackager(packager);
